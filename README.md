@@ -7,9 +7,7 @@ This repository designed for the Data Engineering Fellowship program, providing 
 
 This repository aims to cover a wide range of data engineering topics, from data ingestion and extraction to data transformation and loading.
 
-In this repository, you will find examples of various
-
-data pipeline architectures and techniques, including: 
+In this repository, you will find examples of various data pipeline architectures and techniques, including: 
 - Batch Processing, 
 - Real-time Streaming,
 - Distributed Computing. 
