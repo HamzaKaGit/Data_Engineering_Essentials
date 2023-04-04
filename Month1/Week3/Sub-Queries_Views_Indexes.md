@@ -122,3 +122,67 @@ SELECT *
 FROM order_details;
 ```
 Here, the SQL command selects data from the view `order_details.`
+
+
+# What are indexes?
+Indexes are used to `improve` the `performance` of `queries` in `SQL` by allowing the `database` to quickly `locate` the `rows` that match a `certain condition` or `set of conditions`. An index can be `created` on `one or more columns` in a `table`, and it provides a `fast`, `efficient` way to search through the `data`.
+
+There are `two main types` of indexes in SQL: 
+
+- Clustered 
+- Non-clustered
+## Clustered Index:
+A clustered index determines the `physical` order of the data in a table. When you create a clustered index on a table, the data is `stored` in the order `specified by the index.` Each table can have only `one clustered index.`
+
+### Here's an example of how to create a clustered index:
+```sql
+CREATE CLUSTERED INDEX idx_orders_orderdate
+ON orders (orderdate);
+```
+
+In this example, we're creating a clustered index called `idx_orders_orderdate` on the `orderdate` column in the `orders` table.
+
+## Nonclustered Index:
+A nonclustered index is a `separate structure` from the data in the table. It contains a `copy` of the `indexed columns` and a `pointer to the location` of the `corresponding row(s) `in the `table`. Each table can have `multiple` nonclustered indexes.
+
+### Here's an example of how to create a nonclustered index:
+
+```sql
+CREATE NONCLUSTERED INDEX idx_orders_customerid
+ON orders (customerid);
+```
+In this example, we're creating a nonclustered index called `idx_orders_customerid` on the `customerid` column in the orders `table`.
+
+## Creating, Altering, and Dropping Indexes:
+To create an index in SQL, you can use the `CREATE INDEX `statement followed by the `index name,` the `table name,` and the `columns` you want to index:
+
+```sql
+CREATE INDEX index_name
+ON table_name (column1, column2, ...);
+```
+To `alter` an existing index, you can use the `ALTER INDEX` statement:
+
+```sql
+ALTER INDEX index_name
+ON table_name
+REBUILD;
+```
+This statement will `rebuild` the index, which can be useful if you've made changes to the data in the table that have affected the index.
+
+To `drop` an index, you can use the `DROP INDEX`statement:
+```sql
+DROP INDEX index_name
+ON table_name;
+```
+This statement will remove the index from the table.
+
+## Using Indexes:
+Once you've created an index on a table, you can use it in queries to improve performance. Here's an example of how to use an index in a `SELECT` statement:
+```sql
+SELECT *
+FROM orders
+WHERE customerid = 'ALFKI';
+```
+Assuming that there is an index on the `customerid` column in the `orders` table, this query will use the index to quickly find all rows where the `customerid` is `ALFKI`.
+
+
