@@ -2,9 +2,9 @@
 
 Subqueries are queries that are `embedded` within another query. They can be used to `retrieve data` that will be used in the `main query,` or to `filter` or `aggregate` data before it's returned. There are `four types` of subqueries: 
 
-- single-row, 
-- multi-row,
-- nested, and 
+- single-row
+- multi-row
+- nested
 - correlated. 
 
 Let's go through each one in turn.
@@ -51,3 +51,74 @@ FROM employees e
 WHERE salary > (SELECT AVG(salary) FROM employees WHERE department_id = e.department_id);
 ```
 In this example, the correlated subquery calculates the average salary for employees in the same department as the employee in the outer query, and the main query returns only those employees whose salary is greater than the department average.
+
+
+# Views:
+In SQL, views contain `rows` and `columns` similar to a table, however, views `don't hold the actual data.`
+
+![Logo](https://www.programiz.com/sites/tutorial2program/files/sql-view.png)
+
+## Purpose of Views:
+A view is a `virtual table` created based on the result set of a `SELECT statement.` Views can be used to 
+- Simplify complex queries
+- Hide the complexity of underlying tables from end-users, 
+- Provide an additional level of security by restricting access to only specific columns of a table.
+
+## Creating, Altering, and Dropping Views:
+To create a view, you need to use the `CREATE VIEW` statement followed by the `SELECT statement` that defines the view.
+## Here's an example:
+
+```sql
+CREATE VIEW us_customers AS
+SELECT customer_id, first_name
+FROM Customers
+WHERE Country = 'USA';
+```
+
+Here, a view named `us_customers` is created from the `customers` table.
+
+Now to `select` the customers who lives in `USA,` we can simply run,
+
+```sql
+SELECT *
+FROM us_customers;
+```
+
+## Updating a View:
+It's possible to `change or update` an existing view using the `CREATE OR REPLACE VIEW` command. For example,
+
+```sql
+CREATE OR REPLACE VIEW us_customers AS
+SELECT *
+FROM Customers
+WHERE Country = 'USA';
+```
+Here, the `us_customers` view is updated to `show all` the fields.
+
+## Deleting a View:
+We can delete views using the `DROP VIEW` command. For example,
+```sql
+DROP VIEW us_customers;
+```
+
+Here, the SQL command deletes the view named `us_customers.`
+
+## Views for Complex Queries:
+Suppose `A and B` are `two tables` and we wan't to select data from both of the tables. For that, we have to use `SQL JOINS.`
+
+However using the `JOIN` each time could be a tedious task. For that, we can create a view to fetch records easily.
+
+### Let's create a view:
+```sql
+CREATE VIEW order_details AS
+SELECT Customers.customer_id, Customers.first_name, Orders.amount
+FROM Customers
+JOIN Orders
+ON Customers.customer_id = Orders.customer_id;
+```
+### Now, to select the data, we can run:
+```sql
+SELECT *
+FROM order_details;
+```
+Here, the SQL command selects data from the view `order_details.`
